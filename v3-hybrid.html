@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FightBook · Mafia Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme-hybrid.css">
+</head>
+<body class="theme-hybrid">
+<header class="topbar">
+  <div class="brand"><span class="logo-mark">⚔</span><span class="logo-word">Fight<em>Book</em></span></div>
+  <nav class="mainnav">
+    <button data-view="dashboard" class="active">Home</button>
+    <button data-view="roster">Roster</button>
+  </nav>
+  <div class="topbar-right"><span id="syncStatus" class="sync" style="font-size:11px;letter-spacing:.3px;margin-right:12px;white-space:nowrap"></span><div class="fakesearch">🔍 Search the roster</div></div>
+</header>
+<main class="app">
+  <section id="view-dashboard" class="view">
+    <h1 class="dash-title">Season overview</h1>
+    <div id="statCards" class="stat-cards"></div>
+    <div id="factionRecord" class="faction"></div>
+    <div class="awards-head"><h3>Hall of fame</h3><span class="panel-tag">auto-awarded · click to open</span></div>
+    <div id="superlatives" class="awards"></div>
+    <div class="dash-cols">
+      <section class="panel panel-lb">
+        <div class="panel-head"><h3>Leaderboard</h3><span class="panel-tag" id="sortLabel">by power</span></div>
+        <div class="sortbar" id="sortbar">
+          <button data-sort="power" class="active">Power</button>
+          <button data-sort="winRate">Win %</button>
+          <button data-sort="wins">Wins</button>
+          <button data-sort="games">Games</button>
+          <button data-sort="mafiaWR">Getaway %</button>
+          <button data-sort="mafiaFreq">Rap sheet</button>
+          <button data-sort="citWR">Town read</button>
+          <button data-sort="streak">Streak</button>
+        </div>
+        <div class="sort-caption" id="sortCaption"></div>
+        <div id="leaderboard"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h3>Recent game nights</h3><span class="panel-tag">latest first</span></div>
+        <div id="feed"></div>
+      </section>
+    </div>
+  </section>
+  <section id="view-roster" class="view hidden">
+    <div class="roster-head">
+      <h2 class="roster-title">The Roster</h2>
+      <input id="rosterSearch" placeholder="Search by name…" autocomplete="off">
+      <div class="filters">
+        <button data-filter="all" class="active">All</button>
+        <button data-filter="cit">Pure Citizens</button>
+        <button data-filter="maf">Ran Mafia</button>
+        <button data-filter="vet">Veterans</button>
+      </div>
+      <span id="rosterCount" class="roster-count"></span>
+    </div>
+    <div id="rosterGrid" class="roster-grid"></div>
+  </section>
+</main>
+<div id="charModal" class="modal hidden">
+  <div class="modal-card">
+    <button data-close class="modal-x" aria-label="Close">✕</button>
+    <div id="charModalBody"></div>
+  </div>
+</div>
+<script src="config.js"></script>
+<script src="sheet.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

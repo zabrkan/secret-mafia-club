@@ -1,0 +1,11 @@
+# Netlify build config — runs on every push once the repo is linked.
+# build.sh regenerates the HTML from build.py and assembles ./public.
+[build]
+  command = "bash build.sh"
+  publish = "public"
+
+# Static site — no framework. Pretty 404 falls back to the homepage.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
