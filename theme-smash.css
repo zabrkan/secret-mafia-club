@@ -152,7 +152,7 @@ h1,h2,h3,h4{font-family:'Anton',Impact,sans-serif;font-weight:400;letter-spacing
 /* ---- sortable leaderboard + hall of fame ---- */
 .awards-head{display:flex;align-items:baseline;gap:12px;margin:0 0 12px}
 .awards-head h3{font-size:24px;color:#fff;text-transform:uppercase;transform:skewX(-6deg);text-shadow:0 0 14px rgba(255,210,63,.35)}
-.awards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:22px}
+.awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:22px}
 .award{position:relative;text-align:left;background:linear-gradient(165deg,#16203a,#0b1124);border:1px solid var(--line);border-top:3px solid var(--gold);padding:12px;cursor:pointer;font-family:'Oswald';color:var(--txt);display:flex;flex-direction:column;gap:3px;clip-path:polygon(0 0,100% 0,100% 88%,92% 100%,0 100%);transition:transform .12s,box-shadow .12s}
 .award:hover{transform:translateY(-3px);box-shadow:0 0 22px rgba(255,210,63,.32)}
 .award[disabled]{cursor:default}

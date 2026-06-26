@@ -148,7 +148,7 @@ h1,h2,h3,h4{font-family:'Oswald',sans-serif;font-weight:600;margin:0}
 /* ---- sortable leaderboard + hall of fame ---- */
 .awards-head{display:flex;align-items:baseline;gap:10px;margin:0 2px 12px}
 .awards-head h3{font-size:18px;text-transform:uppercase;letter-spacing:.5px}
-.awards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
 .award{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;border-top:3px solid var(--accent);padding:12px;cursor:pointer;font:inherit;color:var(--txt);display:flex;flex-direction:column;gap:3px;transition:transform .12s,box-shadow .12s}
 .award:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(123,140,255,.2)}
 .award[disabled]{cursor:default}

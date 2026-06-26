@@ -6,17 +6,17 @@ THEMES = {
    title="mafiabook",
    brand='<span class="logo-mark">m</span><span class="logo-word">mafiabook</span>',
    nav1="Home", nav2="Roster",
-   right='<div class="fakesearch">🔍 Search fighters</div>',
-   dashtitle="", rostertitle="Fighters",
+   right='<div class="fakesearch">🔍 Search players</div>',
+   dashtitle="", rostertitle="Players",
  ),
  "v2-smash": dict(
    css="theme-smash.css", body="theme-smash",
    fonts='<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">',
-   title="MAFIA RUMBLE",
-   brand='<span class="logo-bolt">⚔</span><span class="logo-word">MAFIA<em>RUMBLE</em></span>',
+   title="Secret Mafia Club",
+   brand='<span class="logo-bolt">⚔</span><span class="logo-word">SECRET MAFIA <em>CLUB</em></span>',
    nav1="Battle Records", nav2="Character Select",
    right='<div class="coin">© SEASON 1</div>',
-   dashtitle="Battle Records", rostertitle="Choose your fighter",
+   dashtitle="Battle Records", rostertitle="Choose your player",
  ),
  "v3-hybrid": dict(
    css="theme-hybrid.css", body="theme-hybrid",
@@ -46,11 +46,10 @@ BODY = '''<header class="topbar">
     <div id="superlatives" class="awards"></div>
     <div class="dash-cols">
       <section class="panel panel-lb">
-        <div class="panel-head"><h3>Leaderboard</h3><span class="panel-tag" id="sortLabel">by power</span></div>
+        <div class="panel-head"><h3>Leaderboard</h3><span class="panel-tag" id="sortLabel">by wins</span></div>
         <div class="sortbar" id="sortbar">
-          <button data-sort="power" class="active">Power</button>
           <button data-sort="winRate">Win %</button>
-          <button data-sort="wins">Wins</button>
+          <button data-sort="wins" class="active">Wins</button>
           <button data-sort="games">Games</button>
           <button data-sort="mafiaWR">Getaway %</button>
           <button data-sort="mafiaFreq">Rap sheet</button>
@@ -93,7 +92,7 @@ TPL = '''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} · Mafia Tracker</title>
+<title>{title} — tracker</title>
 {fonts}
 <link rel="stylesheet" href="{css}">
 </head>

@@ -1,10 +1,10 @@
-# Mafia Rumble 🔪
+# Secret Mafia Club 🔪
 
 A live stats tracker for our **Mafia** game nights — dashboard, sortable leaderboard, a Smash-style
 fighter roster, and a character sheet for every player. Reads our Google Sheet directly in the browser,
 so it's always current.
 
-**Live:** https://mafia-rumble.netlify.app
+**Live:** https://secret-mafia-club.netlify.app
 
 ## How it works (no backend)
 The site fetches the game log from a Google Sheet on every load and computes all stats client-side.

@@ -2,7 +2,7 @@
 (function () {
   let M = window.MAFIA || {players:[],agg:{sessions:[]},sessions:[],games:[]};
   const PAL =['#e74c3c','#e67e22','#f1c40f','#16a085','#1abc9c','#2980b9','#8e44ad','#e84393','#fd79a8','#00b894','#6c5ce7','#0984e3','#d63031','#fd79a8','#0097e6','#44bd32'];
-  let maxWins=1,maxGames=1,maxPower=1,curSort='power';
+  let maxWins=1,maxGames=1,curSort='wins';
   const $ = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
@@ -19,7 +19,7 @@
     if(wr===100)return 'A';if(wr>=50)return 'B';if(wr===0)return 'D';return 'C';
   }
   function archetype(p){
-    if(p.sessionCount>1) return {t:'The Veteran', b:'Only fighter to show up across every game night. The constant.'};
+    if(p.sessionCount>1) return {t:'The Veteran', b:'Only player to show up across every game night. The constant.'};
     if(p.rounds>=3&&p.winRate===100) return {t:'Undefeated', b:'Has never tasted defeat. A perfect record under pressure.'};
     if(p.asMafia>=2&&p.mafiaWinRate===0) return {t:'Most Wanted', b:'Pulled into the Mafia again and again — and caught every single time.'};
     if(p.asMafia>=2&&p.mafiaWinRate>=50) return {t:'Mastermind', b:'Cold operator. Survives the night when the knives come out.'};
@@ -46,7 +46,7 @@
     const cards=[
       {ic:'📅',l:'Game nights',v:a.sessionCount,s:a.sessions.join(' · ')},
       {ic:'🎭',l:'Rounds played',v:a.totalGames,s:'across all nights'},
-      {ic:'👥',l:'Fighters',v:a.totalPlayers,s:`${a.appearances} total appearances`},
+      {ic:'👥',l:'Players',v:a.totalPlayers,s:`${a.appearances} total appearances`},
       {ic:'🛡️',l:'Citizens win rate',v:a.citizenWinPct+'%',s:`Town leads ${a.citizenWins}–${a.mafiaWins}`,accent:'cit'},
       {ic:'🏆',l:'Most wins',v:a.mostWins,s:`${a.mostWinsVal} victories`,accent:'gold'},
       {ic:'🔪',l:'Mafia wins',v:a.mafiaWins,s:`only ${a.citizenWinPct?100-a.citizenWinPct:0}% of nights`,accent:'maf'},
@@ -77,23 +77,18 @@
     if(last){for(let i=log.length-1;i>=0;i--){if(log[i].result===last.result)c++;else break;}}
     return {cur:last&&last.result==='W'?c:-c,longW,longL};
   }
-  function powerOf(p){return Math.round(p.winRate*0.7+Math.min(p.rounds,12)*2.5+p.winsAsMafia*25+(p.sessionCount-1)*12+p.wins*3);}
   function computeDerived(){
     M.players.forEach(p=>{
       const s=streaks(p.log);
       p.curStreak=s.cur;p.longWin=s.longW;p.longLoss=s.longL;
       p.mafiaFreq=Math.round(p.asMafia/p.rounds*100);
-      p.power=powerOf(p);p.gsp=Math.round(p.power*47000/1000)*1000;
     });
     maxWins=Math.max(...M.players.map(p=>p.wins));
     maxGames=Math.max(...M.players.map(p=>p.rounds));
-    maxPower=Math.max(...M.players.map(p=>p.power));
   }
   function streakTxt(c){return c>0?'W'+c:c<0?'L'+(-c):'–';}
 
   const METRICS={
-    power:{label:'Power',cap:'Overall fighter rating — win rate, volume, clutch Mafia wins & attendance in one number.',
-      sort:p=>p.power,val:p=>p.gsp.toLocaleString(),suf:'GSP',bar:p=>p.power/maxPower*100},
     winRate:{label:'Win %',cap:'Raw win rate across every round. Watch the small samples.',
       sort:p=>p.winRate,val:p=>p.winRate+'%',bar:p=>p.winRate},
     wins:{label:'Wins',cap:'Total victories — rewards showing up and grinding rounds.',
@@ -133,18 +128,16 @@
   }
   function renderSuperlatives(){
     const P=M.players;
-    const top=[...P].sort((a,b)=>b.power-a.power)[0];
     const vet=[...P].sort((a,b)=>b.sessionCount-a.sessionCount||b.rounds-a.rounds)[0];
     const wanted=[...P].sort((a,b)=>b.asMafia-a.asMafia||b.mafiaFreq-a.mafiaFreq)[0];
     const deadly=[...P].filter(p=>p.winsAsMafia>0).sort((a,b)=>b.winsAsMafia-a.winsAsMafia||b.asMafia-a.asMafia)[0];
     const undef=P.filter(p=>p.winRate===100&&p.rounds>=2);
-    const undefLead=[...undef].sort((a,b)=>b.rounds-a.rounds||b.power-a.power)[0];
+    const undefLead=[...undef].sort((a,b)=>b.rounds-a.rounds||b.wins-a.wins)[0];
     const cards=[
-      {ic:'🏆',cls:'gold',label:'Top fighter',name:top.name,detail:top.gsp.toLocaleString()+' GSP'},
       {ic:'🎖️',cls:'blue',label:'The veteran',name:vet.name,detail:`${vet.rounds} games · ${vet.sessionCount} nights`},
       {ic:'🥷',cls:'red',label:'Most wanted',name:wanted.name,detail:`Mafia ${wanted.asMafia}× (${wanted.mafiaFreq}%)`},
       {ic:'🔪',cls:'red',label:'Deadliest Mafia',name:deadly?deadly.name:'None',detail:deadly?`${deadly.winsAsMafia}/${deadly.asMafia} got away`:'town caught everyone'},
-      {ic:'💯',cls:'green',label:'Still undefeated',name:undef.length+' fighters',detail:undefLead?`led by ${undefLead.name} (${undefLead.wins}-0)`:'—'},
+      {ic:'💯',cls:'green',label:'Still undefeated',name:undef.length+' players',detail:undefLead?`led by ${undefLead.name} (${undefLead.wins}-0)`:'—'},
     ];
     $('#superlatives').innerHTML=cards.map(c=>{
       const real=P.find(p=>p.name===c.name);
@@ -195,7 +188,7 @@
   }
   function renderRoster(){
     const list=rosterList();
-    $('#rosterCount').textContent=`${list.length} fighters`;
+    $('#rosterCount').textContent=`${list.length} players`;
     $('#rosterGrid').innerHTML=list.map(p=>`
       <button class="roster-tile" data-char="${esc(p.name)}">
         ${tierTag(p)}

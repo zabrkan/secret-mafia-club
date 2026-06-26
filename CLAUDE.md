@@ -1,9 +1,9 @@
-# Mafia Rumble — tracker site (Claude Code guide)
+# Secret Mafia Club — tracker site (Claude Code guide)
 
 A character/stats tracker for our **Mafia** game nights. Live, zero-backend: the browser pulls the
 game log straight from a Google Sheet on every page load and recomputes everything client-side.
 
-- **Live site:** https://mafia-rumble.netlify.app
+- **Live site:** https://secret-mafia-club.netlify.app
 - **Deploys:** push to `main` → Netlify auto-builds (`build.sh`) and publishes. No manual step.
 - **Data updates:** just edit the Google Sheet and refresh the site. No code change, no redeploy.
 
