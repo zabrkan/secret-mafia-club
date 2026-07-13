@@ -27,6 +27,15 @@ THEMES = {
    right='<div class="fakesearch">🔍 Search the roster</div>',
    dashtitle="Season overview", rostertitle="The Roster",
  ),
+ "v4-club": dict(
+   css="theme-club.css", body="theme-club",
+   fonts='<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">',
+   title="Secret Mafia Club",
+   brand='<span class="logo-mark"></span><span class="logo-word">Secret Mafia <em>Club</em></span>',
+   nav1="Overview", nav2="Players",
+   right='<div class="coin">Season 1</div>',
+   dashtitle="Overview", rostertitle="Players",
+ ),
 }
 
 BODY = '''<header class="topbar">
