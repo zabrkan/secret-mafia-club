@@ -19,6 +19,8 @@ h1,h2,h3,h4{font-family:var(--head);margin:0;font-weight:400;text-transform:uppe
 /* topbar */
 .topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:20px;background:rgba(18,18,18,.9);backdrop-filter:blur(10px);height:64px;padding:0 26px;border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:11px}
+.brand-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;line-height:0}
+.brand-logo{height:42px;width:auto;display:block}
 .logo-mark{width:12px;height:12px;background:var(--cream);flex-shrink:0}
 .logo-word{font-family:var(--head);font-weight:400;font-size:15px;text-transform:uppercase;letter-spacing:.24em;color:var(--cream)}
 .logo-word em{font-style:normal;color:var(--taupe)}
@@ -41,7 +43,7 @@ h1,h2,h3,h4{font-family:var(--head);margin:0;font-weight:400;text-transform:uppe
 .stat-card.ac-cit::before{background:var(--purple-lift);opacity:1} .stat-card.ac-maf::before{background:var(--red);opacity:1} .stat-card.ac-gold::before{background:var(--cream);opacity:1}
 .stat-ic{display:none}
 .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--taupe);font-weight:500}
-.stat-value{font-size:34px;font-weight:800;line-height:1.05;margin:8px 0 3px;letter-spacing:-.02em;color:var(--cream)}
+.stat-value{font-family:var(--head);text-transform:uppercase;font-size:34px;font-weight:400;line-height:1.05;margin:8px 0 3px;letter-spacing:.03em;color:var(--cream)}
 .stat-card.ac-cit .stat-value{color:var(--purple-lift)} .stat-card.ac-maf .stat-value{color:var(--red)}
 .stat-sub{color:var(--gray);font-size:12px;letter-spacing:0}
 
@@ -181,6 +183,7 @@ h1,h2,h3,h4{font-family:var(--head);margin:0;font-weight:400;text-transform:uppe
 
 @media(max-width:640px){
   .app{padding:22px 14px 60px}
+  .brand-logo{height:36px}
   .topbar{flex-wrap:wrap;height:auto;padding:10px 16px;gap:10px}
   .topbar-right{order:2;margin-left:auto} .topbar-right .coin,.topbar-right .fakesearch{display:none}
   #syncStatus{margin-right:0}
