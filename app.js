@@ -127,13 +127,11 @@
   }
   function renderSuperlatives(){
     const P=M.players;
-    const vet=[...P].sort((a,b)=>b.sessionCount-a.sessionCount||b.rounds-a.rounds)[0];
     const wanted=[...P].sort((a,b)=>b.asMafia-a.asMafia||b.mafiaFreq-a.mafiaFreq)[0];
     const deadly=[...P].filter(p=>p.winsAsMafia>0).sort((a,b)=>b.winsAsMafia-a.winsAsMafia||b.asMafia-a.asMafia)[0];
     const undef=P.filter(p=>p.winRate===100&&p.rounds>=2);
     const undefLead=[...undef].sort((a,b)=>b.rounds-a.rounds||b.wins-a.wins)[0];
     const cards=[
-      {ic:'🎖️',cls:'blue',label:'The veteran',name:vet.name,detail:`${vet.rounds} games · ${vet.sessionCount} nights`},
       {ic:'🥷',cls:'red',label:'Most wanted',name:wanted.name,detail:`Mafia ${wanted.asMafia}× (${wanted.mafiaFreq}%)`},
       {ic:'🔪',cls:'red',label:'Deadliest Mafia',name:deadly?deadly.name:'None',detail:deadly?`${deadly.winsAsMafia}/${deadly.asMafia} got away`:'town caught everyone'},
       {ic:'💯',cls:'green',label:'Still undefeated',name:undef.length+' players',detail:undefLead?`led by ${undefLead.name} (${undefLead.wins}-0)`:'—'},
