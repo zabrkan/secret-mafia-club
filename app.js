@@ -2,7 +2,7 @@
 (function () {
   let M = window.MAFIA || {players:[],agg:{sessions:[]},sessions:[],games:[]};
   const PAL =['#e74c3c','#e67e22','#f1c40f','#16a085','#1abc9c','#2980b9','#8e44ad','#e84393','#fd79a8','#00b894','#6c5ce7','#0984e3','#d63031','#fd79a8','#0097e6','#44bd32'];
-  let maxWins=1,maxGames=1,curSort='wins';
+  let maxWins=1,maxGames=1,curSort='winRate';
   const $ = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
@@ -48,7 +48,6 @@
       {ic:'🎭',l:'Rounds played',v:a.totalGames,s:'across all nights'},
       {ic:'👥',l:'Players',v:a.totalPlayers,s:`${a.appearances} total appearances`},
       {ic:'🛡️',l:'Citizens win rate',v:a.citizenWinPct+'%',s:`Town leads ${a.citizenWins}–${a.mafiaWins}`,accent:'cit'},
-      {ic:'🏆',l:'Most wins',v:a.mostWins,s:`${a.mostWinsVal} victories`,accent:'gold'},
       {ic:'🔪',l:'Mafia wins',v:a.mafiaWins,s:`only ${a.citizenWinPct?100-a.citizenWinPct:0}% of nights`,accent:'maf'},
     ];
     $('#statCards').innerHTML=cards.map(c=>`
