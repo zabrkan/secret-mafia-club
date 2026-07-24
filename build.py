@@ -82,7 +82,6 @@ BODY = '''<header class="topbar">
         <button data-filter="all" class="active">All</button>
         <button data-filter="cit">Pure Citizens</button>
         <button data-filter="maf">Ran Mafia</button>
-        <button data-filter="vet">Veterans</button>
       </div>
       <span id="rosterCount" class="roster-count"></span>
     </div>
