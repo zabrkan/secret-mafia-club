@@ -53,6 +53,7 @@
       <button class="btn wide" id="scanGo" disabled>Scan sheets</button>
       <button class="btn ghost" id="clearAll" hidden>Clear</button>
     </div>
+    <p class="or-line">or <button class="linkbtn" id="manualGo">enter a game by hand</button> — no photo needed</p>
   </section>
 
   <!-- 2. scanning -->
@@ -64,10 +65,11 @@
 
   <!-- 3. review -->
   <section id="s-review" class="hidden">
-    <h1>Check the reading</h1>
-    <p class="lede">Nothing is saved yet. Fix anything that was misread — names flagged in <span style="color:#c9b45a">yellow</span> are new to the league, and fields outlined in <span style="color:var(--red)">red</span> are ones the scan was unsure about.</p>
+    <h1 id="reviewTitle">Check the reading</h1>
+    <p class="lede" id="reviewLede"></p>
     <div id="reviewNotice"></div>
     <div id="games"></div>
+    <p class="or-line"><button class="linkbtn" id="addAnother">+ add another game by hand</button></p>
     <div class="actions">
       <button class="btn wide" id="submitGo">Add to leaderboard</button>
       <button class="btn ghost" id="backToUpload">Start over</button>

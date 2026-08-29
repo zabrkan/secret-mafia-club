@@ -228,6 +228,32 @@
     throw new Error('Scan failed.');
   }
 
+  /* ---------- manual entry ----------
+     The review card is already a complete, validated entry form, so a blank one is a
+     perfectly good way in when there is no photo — or when a photo will not scan. */
+  function todayMDY() {
+    var d = new Date();
+    return (d.getMonth() + 1) + '/' + d.getDate() + '/' + String(d.getFullYear()).slice(2);
+  }
+  function blankGame(seats) {
+    var players = [];
+    for (var i = 1; i <= (seats || 10); i++) {
+      players.push({ seat: i, name: '', name_confidence: 'high', role: 'Citizen', eliminated: false });
+    }
+    var lastDate = state.games.length ? state.games[state.games.length - 1].date : todayMDY();
+    return {
+      __src: 'entered by hand', date: lastDate, date_raw: '', date_confidence: 'high',
+      round: state.games.length + 1, round_confidence: 'high',
+      won: 'Citizens', won_confidence: 'high', winners_line_raw: '',
+      players: players, votes: [], unreadable: [], notes: ''
+    };
+  }
+  function addManual() {
+    state.games.push(blankGame(10));
+    renderReview();
+    show('s-review');
+  }
+
   /* ---------- derived ---------- */
   function sides(g) {
     var maf = [], cit = [];
@@ -291,6 +317,14 @@
   /* ---------- step 3: review ---------- */
   function renderReview() {
     if ($('s-review').classList.contains('hidden') && !state.games.length) return;
+
+    /* "Check the reading" only makes sense when something was actually read. */
+    var anyScanned = state.games.some(function (g) { return g.__src !== 'entered by hand'; });
+    $('reviewTitle').textContent = anyScanned ? 'Check the reading' : 'Enter the game';
+    $('reviewLede').innerHTML = anyScanned
+      ? 'Nothing is saved yet. Fix anything that was misread — names flagged in <span style="color:#c9b45a">yellow</span> are new to the league, and fields outlined in <span style="color:var(--red)">red</span> are ones the scan was unsure about.'
+      : 'Nothing is saved yet. Fill in the seats, mark who was Mafia, Don and Sheriff, and pick the winning side. Names flagged in <span style="color:#c9b45a">yellow</span> have never played before.';
+
     var notice = '';
     if (state.__failNote) notice += '<div class="notice err">' + state.__failNote + '</div>';
     if (!state.known.length) notice += '<div class="notice">Could not load the existing roster, so new-player warnings are off. Check the spelling of every name carefully.</div>';
@@ -498,6 +532,12 @@
   dz.addEventListener('drop', function (e) { if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files); });
   $('fileInput').addEventListener('change', function (e) { addFiles(e.target.files); e.target.value = ''; });
   $('scanGo').addEventListener('click', function () { scanAll(); });
+  $('manualGo').addEventListener('click', function () { state.games = []; addManual(); });
+  $('addAnother').addEventListener('click', function () {
+    addManual();
+    var cards = document.querySelectorAll('.game-card');
+    if (cards.length) cards[cards.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
   $('clearAll').addEventListener('click', function () { state.files = []; renderThumbs(); });
   $('backToUpload').addEventListener('click', function () { state.games = []; state.__failNote = ''; show('s-upload'); });
   $('submitGo').addEventListener('click', function () { submitAll(false); });

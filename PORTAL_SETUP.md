@@ -5,6 +5,11 @@ sheet, the photo is read automatically, they check and correct the reading on sc
 submit appends a row to the same Google Sheet the leaderboard already reads. No redeploy, no
 manual typing.
 
+**The photo scan is optional.** The portal also has an "enter a game by hand" path that skips
+scanning entirely — same review form, same validation, same write. That path needs **no
+`ANTHROPIC_API_KEY` and no vision API at all**, only the Google credentials in section 2. It is
+also the fallback when a photo is too blurry to read.
+
 Two Netlify Functions do the work:
 
 | Function | What it does | Secrets it needs |
