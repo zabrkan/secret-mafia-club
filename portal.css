@@ -15,7 +15,10 @@
 .portal .lede{color:var(--taupe);font-size:14px;line-height:1.55;margin:0 0 22px;letter-spacing:0}
 
 /* dropzone */
-.dropzone{border:1px dashed var(--line2);border-radius:var(--r);background:var(--card);padding:38px 22px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+/* display:block is load-bearing — a <label> is inline by default, and with block children it
+   fragments into several inline boxes that each paint the border and background, which looks
+   like the panel has been torn in half and offset. */
+.dropzone{display:block;border:1px dashed var(--line2);border-radius:var(--r);background:var(--card);padding:38px 22px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
 .dropzone:hover,.dropzone.hot{border-color:var(--purple-lift);background:var(--card2)}
 .dropzone-ic{font-size:26px;opacity:.5;margin-bottom:10px}
 .dropzone strong{display:block;font-size:15px;font-weight:600;margin-bottom:6px;color:var(--cream)}
