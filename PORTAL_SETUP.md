@@ -1,5 +1,30 @@
 # Score-sheet portal — setup
 
+> ## How this club's instance is actually wired (2026-08-28)
+>
+> **Sheet writes: working.** Apps Script route (Option B below), not the service account.
+> - The web app lives in an Apps Script project owned by **az.buhchev@gmail.com** — the same
+>   account that owns the Netlify site — deployed as a Web app, *Execute as: me*, *Access: Anyone*.
+> - That account was added as an **Editor** on the Mafia Tracker sheet so the script can write.
+>   The sheet is owned by business.jontweiss@gmail.com; kosta@networkmedia.com and
+>   RickLax3000@gmail.com are the other editors.
+> - **Do not try to deploy this from `kosta@networkmedia.com`.** It is a Google Workspace account
+>   whose admin policy blocks Apps Script web-app deployment — the New Deployment dialog dies with
+>   "Something went wrong" every time, with no useful error. A personal Gmail account works fine.
+>   This cost an hour to diagnose; it is the single most useful thing on this page.
+> - The deployed script does its own duplicate check on (date, game number), so that guard works on
+>   this route even though `existingKeys()` in submit.js only runs on the service-account route.
+>
+> **Photo scanning: not working yet.** `ANTHROPIC_API_KEY` is set, authenticates, and reaches the
+> API — but the account is on the free "Evaluation access" plan with $0 credits, and the key is
+> identity-linked so it also needs `ANTHROPIC_WORKSPACE_ID`. Both must be fixed before scanning
+> works. The manual-entry path is unaffected and needs neither.
+>
+> Verified end to end on 2026-08-28: a game written through the live function landed in columns
+> A–H plus the extended I–O data, the duplicate guard rejected a repeat, and the test row was
+> removed afterwards.
+
+
 The portal lives at **`/submit.html`** on the deployed site. Someone photographs each paper score
 sheet, the photo is read automatically, they check and correct the reading on screen, and pressing
 submit appends a row to the same Google Sheet the leaderboard already reads. No redeploy, no
