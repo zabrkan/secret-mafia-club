@@ -5,7 +5,9 @@
   let maxWins=1,maxGames=1,curSort='winRate';
   const $ = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => [...r.querySelectorAll(s)];
-  const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  /* Must escape quotes too: names are interpolated into quoted attributes (data-char="…"),
+     so a name containing " would close the attribute and inject live markup. */
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   function hash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h);}
   function initials(n){return n.slice(0,2);}

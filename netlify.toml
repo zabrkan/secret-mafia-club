@@ -3,6 +3,11 @@
 [build]
   command = "bash build.sh"
   publish = "public"
+  functions = "netlify/functions"
+
+# scan.js waits on a vision model reading handwriting; the 10s default is not enough.
+[functions]
+  node_bundler = "esbuild"
 
 # Static site — no framework. Pretty 404 falls back to the homepage.
 [[redirects]]

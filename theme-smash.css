@@ -186,6 +186,7 @@ html,body{overflow-x:clip}
   .brand{font-size:20px}
   .topbar-right{order:2;margin-left:auto;display:flex;align-items:center}
   .topbar-right .coin{display:none}
+  .topbar-right .portal-link{display:inline-block}
   #syncStatus{margin-right:0}
   .mainnav{order:3;flex-basis:100%;margin:0;gap:6px}
   .mainnav button{flex:1;padding:9px 4px;font-size:12px;text-align:center}

@@ -44,7 +44,7 @@ BODY = '''<header class="topbar">
     <button data-view="dashboard" class="active">{nav1}</button>
     <button data-view="roster">{nav2}</button>
   </nav>
-  <div class="topbar-right"><span id="syncStatus" class="sync" style="font-size:11px;letter-spacing:.3px;margin-right:12px;white-space:nowrap"></span>{right}</div>
+  <div class="topbar-right"><span id="syncStatus" class="sync" style="font-size:11px;letter-spacing:.3px;margin-right:12px;white-space:nowrap"></span><a class="coin portal-link" href="submit.html" style="text-decoration:none">+ Log a game</a>{right}</div>
 </header>
 <main class="app">
   <section id="view-dashboard" class="view">

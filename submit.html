@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secret Mafia Club — log a game night</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme-club.css">
+<link rel="stylesheet" href="portal.css">
+</head>
+<body class="theme-club">
+<header class="topbar">
+  <div class="brand"><a class="brand-link" href="https://secretmafiaclub.com" target="_blank" rel="noopener noreferrer" aria-label="Secret Mafia Club"><img class="brand-logo" src="logo.png" alt="Secret Mafia Club" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="logo-word" style="display:none">Secret Mafia <em>Club</em></span></a></div>
+  <nav class="mainnav"><button onclick="location.href='index.html'">Leaderboard</button></nav>
+  <div class="topbar-right"><div class="coin">Score sheets</div></div>
+</header>
+
+<main class="portal">
+
+  <!-- gate -->
+  <section id="s-gate" class="gate hidden">
+    <h1>Members only</h1>
+    <p class="lede">Enter the club access code to log a game night.</p>
+    <div class="field"><input id="gateCode" type="password" autocomplete="off" placeholder="Access code" inputmode="text"></div>
+    <div class="actions"><button class="btn wide" id="gateGo">Continue</button></div>
+    <p class="gc-src" id="gateErr" style="color:var(--red);margin-top:12px"></p>
+  </section>
+
+  <!-- steps -->
+  <div id="stepper" class="steps hidden">
+    <div class="step on" data-step="1"><i class="step-n">1</i><span>Photos</span></div>
+    <i class="step-sep"></i>
+    <div class="step" data-step="2"><i class="step-n">2</i><span>Review</span></div>
+    <i class="step-sep"></i>
+    <div class="step" data-step="3"><i class="step-n">3</i><span>Submit</span></div>
+  </div>
+
+  <!-- 1. upload -->
+  <section id="s-upload" class="hidden">
+    <h1>Log a game night</h1>
+    <p class="lede">Take a photo of each score sheet — one photo per game. Lay the paper flat, get the whole sheet in frame, and keep it in focus. Everything gets read automatically, and you check it on the next screen before anything is saved.</p>
+
+    <label class="dropzone" id="dz">
+      <div class="dropzone-ic">📄</div>
+      <strong>Take photos or choose files</strong>
+      <span>JPG, PNG or HEIC · one photo per game · add as many as you like</span>
+      <input id="fileInput" type="file" accept="image/*" multiple capture="environment">
+    </label>
+
+    <div id="thumbs" class="thumbs"></div>
+    <div class="actions">
+      <button class="btn wide" id="scanGo" disabled>Scan sheets</button>
+      <button class="btn ghost" id="clearAll" hidden>Clear</button>
+    </div>
+  </section>
+
+  <!-- 2. scanning -->
+  <section id="s-scanning" class="hidden">
+    <h1>Reading the sheets</h1>
+    <p class="lede">Each photo takes a few seconds. Leave this page open.</p>
+    <div id="scanList"></div>
+  </section>
+
+  <!-- 3. review -->
+  <section id="s-review" class="hidden">
+    <h1>Check the reading</h1>
+    <p class="lede">Nothing is saved yet. Fix anything that was misread — names flagged in <span style="color:#c9b45a">yellow</span> are new to the league, and fields outlined in <span style="color:var(--red)">red</span> are ones the scan was unsure about.</p>
+    <div id="reviewNotice"></div>
+    <div id="games"></div>
+    <div class="actions">
+      <button class="btn wide" id="submitGo">Add to leaderboard</button>
+      <button class="btn ghost" id="backToUpload">Start over</button>
+    </div>
+  </section>
+
+  <!-- 4. done -->
+  <section id="s-done" class="success hidden">
+    <div class="success-ic">✓</div>
+    <h1 id="doneTitle">Saved</h1>
+    <p id="doneMsg"></p>
+    <div class="actions" style="justify-content:center">
+      <button class="btn" onclick="location.href='index.html'">See the leaderboard</button>
+      <button class="btn ghost" id="againGo">Log another night</button>
+    </div>
+  </section>
+
+</main>
+
+<script src="config.js"></script>
+<script src="sheet.js"></script>
+<script src="portal.js"></script>
+</body>
+</html>

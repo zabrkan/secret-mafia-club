@@ -6,6 +6,7 @@ cd "$(dirname "$0")"
 python3 build.py
 rm -rf public && mkdir public
 cp v1-facebook.html v2-smash.html v3-hybrid.html v4-club.html app.js sheet.js config.js data.js theme-*.css public/
+cp submit.html portal.css portal.js public/
 cp logo.png public/ 2>/dev/null || true
-cp v2-smash.html public/index.html
+cp v4-club.html public/index.html   # v4-club is the canonical skin (brand-matched to secretmafiaclub.com)
 echo "Built public/ ($(ls public | wc -l | tr -d ' ') files)"

@@ -186,6 +186,8 @@ h1,h2,h3,h4{font-family:var(--head);margin:0;font-weight:400;text-transform:uppe
   .brand-logo{height:36px}
   .topbar{flex-wrap:wrap;height:auto;padding:10px 16px;gap:10px}
   .topbar-right{order:2;margin-left:auto} .topbar-right .coin,.topbar-right .fakesearch{display:none}
+  /* the season badge can go on small screens, but the way in to the portal must not */
+  .topbar-right .portal-link{display:inline-block;padding:5px 10px}
   #syncStatus{margin-right:0}
   .mainnav{order:3;flex-basis:100%;margin:0;justify-content:center;gap:2px}
   .mainnav button{flex:1;padding:9px 4px}
