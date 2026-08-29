@@ -83,6 +83,22 @@ function buildPrompt(knownNames) {
 - Right side: the **roster**, listed P1 through P10, one player name per seat. Special roles are hand-annotated to the LEFT of the seat label — typically "Mafia", "Don", and "Sheriff". The Don is a member of the mafia; the Sheriff is a citizen.
 - Left / middle: **Vote 1, Vote 2, ...** blocks. In each block, seat numbers are written across the top with tally marks beneath each one. Tally marks are usually vertical strokes; a group of five is drawn as four strokes with a diagonal through them.
 - Bottom: a **seating diagram** — circled seat numbers arranged around a rectangular table. A seat with an **X through it was eliminated** (voted out or killed at night). Letters beside circles echo roles: D = Don, M = Mafia, S = Sheriff.
+
+## Counting tally marks — slow down here
+Miscounting is the most common error on these sheets, so treat each group deliberately:
+- Count ONLY the marks belonging to that seat's column. Do not include the horizontal rule the
+  seat number is written on, the seat number itself, or marks from the neighbouring column.
+- A five-bar gate — four vertical strokes with one diagonal slashed through them — is exactly **5**,
+  not 6. Four plain strokes are **4**.
+- Count each group twice and only report a number you got both times. If the two counts disagree,
+  report your best count AND add an entry to \`unreadable\` naming that vote round and seat.
+- Sanity check: the votes in one round cannot exceed the number of players still alive, and usually
+  equal it or fall just short. If your totals imply more voters than there are seats, recount.
+
+## Reading the seating diagram
+Match each X to the **number written inside that circle**, not to the circle's position on the page.
+Work through the circles one at a time, read the digit inside, then decide whether that specific
+circle is struck through. Seats that are drawn but clean are still alive.
 - Bottom right: a "**Winners:**" line with the winning players' names.
 
 ## Rules
