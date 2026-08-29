@@ -142,15 +142,22 @@ exports.handler = async (event) => {
     ? payload.knownNames.filter(n => typeof n === 'string' && n.trim()).slice(0, 300)
     : [];
 
+  /* Identity-linked keys (the kind the console now issues by default) must name the workspace
+     the request acts in. Workspace-scoped keys carry it implicitly and ignore the header. */
+  const headers = {
+    'content-type': 'application/json',
+    'x-api-key': apiKey,
+    'anthropic-version': '2023-06-01'
+  };
+  if (process.env.ANTHROPIC_WORKSPACE_ID) {
+    headers['anthropic-workspace-id'] = process.env.ANTHROPIC_WORKSPACE_ID;
+  }
+
   let resp;
   try {
     resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
+      headers,
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 4000,
@@ -177,6 +184,9 @@ exports.handler = async (event) => {
   if (!resp.ok) {
     let detail = raw.slice(0, 400);
     try { const j = JSON.parse(raw); if (j.error && j.error.message) detail = j.error.message; } catch {}
+    if (/anthropic-workspace-id/i.test(detail)) {
+      detail = 'This Anthropic key is identity-linked, so it needs a workspace id. Set ANTHROPIC_WORKSPACE_ID in Netlify (find it in the console URL at Settings → Workspaces), or issue a workspace-scoped key instead.';
+    }
     return json(resp.status === 401 ? 500 : 502, {
       ok: false,
       error: resp.status === 401
