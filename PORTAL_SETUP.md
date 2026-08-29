@@ -15,10 +15,31 @@
 > - The deployed script does its own duplicate check on (date, game number), so that guard works on
 >   this route even though `existingKeys()` in submit.js only runs on the service-account route.
 >
-> **Photo scanning: not working yet.** `ANTHROPIC_API_KEY` is set, authenticates, and reaches the
-> API — but the account is on the free "Evaluation access" plan with $0 credits, and the key is
-> identity-linked so it also needs `ANTHROPIC_WORKSPACE_ID`. Both must be fixed before scanning
-> works. The manual-entry path is unaffected and needs neither.
+> **Photo scanning: working.** Uses a **workspace-scoped** key on `claude-sonnet-5`. Two traps cost
+> real time getting here and are worth remembering:
+> - The account must have **API credits**. A Claude Pro/Max subscription does not fund API calls.
+> - A key created from the top-level *Get API key* button is **identity-linked** and fails with
+>   "anthropic-workspace-id is required". The org's implicit "Default" workspace has no addressable
+>   id anywhere in the console, so there is nothing to put in `ANTHROPIC_WORKSPACE_ID`. Create the
+>   key from **Settings → Workspaces → Default → API keys** instead; a workspace key carries its
+>   workspace implicitly. (`ANTHROPIC_WORKSPACE_ID` is still supported if you ever do have an id.)
+>
+> **Measured accuracy**, three runs against a faithful replica of a real sheet:
+>
+> | Field | Result |
+> |---|---|
+> | Player names (incl. `Alex Z`, and `Jon` vs `Jonny` kept distinct) | **10/10, all three runs** |
+> | Roles — Mafia / Don / Sheriff | **10/10, all three runs** |
+> | Winning side, game number, date verbatim | **correct every run** |
+> | Vote tallies | 2–3 of 4 rounds; it miscounts dense stroke groups |
+> | Elimination X marks | 8/10 |
+>
+> The reliable part is exactly the part the leaderboard uses — names, roles and the winning side,
+> from which winners and losers are derived. Vote tallies and elimination marks feed only the
+> extended columns nothing reads yet, so treat column M as best-effort. Counting repeated strokes
+> is a known weakness of vision models; the prompt asks for a deliberate double count and the model
+> does flag its own uncertainty in `unreadable` when it is unsure, which surfaces on the review
+> screen. The human review step is not decoration — it is what makes this safe.
 >
 > Verified end to end on 2026-08-28: a game written through the live function landed in columns
 > A–H plus the extended I–O data, the duplicate guard rejected a repeat, and the test row was
