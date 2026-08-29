@@ -175,18 +175,31 @@ async function appendViaServiceAccount(games, force) {
   return { updates: (body.updates && body.updates.updatedRows) || games.length, via: 'service-account' };
 }
 
-async function appendViaAppsScript(games) {
+/* The Apps Script does its own duplicate check, because it can read the sheet directly and
+   this path never obtains an OAuth token of its own. */
+async function appendViaAppsScript(games, force) {
   const url = process.env.APPS_SCRIPT_URL;
   if (!url) return null;
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     redirect: 'follow',
-    body: JSON.stringify({ secret: process.env.APPS_SCRIPT_SECRET || '', rows: games.map(rowFor) })
+    body: JSON.stringify({
+      secret: process.env.APPS_SCRIPT_SECRET || '',
+      force: force === true,
+      rows: games.map(rowFor)
+    })
   });
   const text = await res.text();
   if (!res.ok) throw new Error(`Apps Script webhook returned ${res.status}: ${text.slice(0, 300)}`);
-  return { updates: games.length, via: 'apps-script', response: text.slice(0, 200) };
+
+  let body;
+  try { body = JSON.parse(text); }
+  catch { throw new Error('The Apps Script webhook did not return JSON. It usually means the deployment is not set to "Anyone" access, so Google served a login page instead.'); }
+
+  if (body.duplicate && body.duplicate.length) return { duplicate: body.duplicate };
+  if (!body.ok) throw new Error('Apps Script refused the write: ' + (body.error || 'unknown reason'));
+  return { updates: body.added || games.length, via: 'apps-script' };
 }
 
 /* ---- validation (server side; the browser validates too, but never trust the browser) ---- */
@@ -247,6 +260,7 @@ exports.handler = async (event) => {
 
   try {
     let result = await appendViaServiceAccount(games, payload.force === true);
+    if (!result) result = await appendViaAppsScript(games, payload.force === true);
     if (result && result.duplicate) {
       return json(409, {
         ok: false,
@@ -254,7 +268,6 @@ exports.handler = async (event) => {
         error: `Already recorded: ${result.duplicate.join(', ')}. Submit again with "add anyway" if this really is a separate game.`
       });
     }
-    if (!result) result = await appendViaAppsScript(games);
     if (!result) {
       return json(500, {
         ok: false,
